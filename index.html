@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I'M BORED AS HELL - The Ultimate Boredom Slayer</title>
+  <meta name="description" content="Kill your boredom instantly with creative challenges, mini-games, mind-blowing facts, time-wasters, and an AI chatbot companion.">
+  <link rel="stylesheet" href="index.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body>
+  <!-- Ambient Particle Canvas Background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <div class="app-container">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav glass">
+      <div class="logo-group">
+        <span class="logo-badge">BOREDOM BUSTER</span>
+        <h1 class="logo-title">ANTI-BORE<span style="color:var(--neon-cyan)">.IO</span></h1>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Dopamine / XP Tracker -->
+        <div class="xp-tracker">
+          <span class="xp-icon">⚡</span>
+          <div class="xp-info">
+            <span class="xp-label">Dopamine Score</span>
+            <span class="xp-val" id="dopamine-val">120 XP</span>
+          </div>
+        </div>
+
+        <!-- Mute Sound Toggle -->
+        <button id="sound-toggle-btn" class="nav-btn" title="Toggle Sound Effects">🔊</button>
+        <!-- Settings Modal Trigger -->
+        <button id="settings-btn" class="nav-btn" title="Settings & AI Keys">⚙️</button>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-tag">⚡ ZERO ATTENTION SPAN FRIENDLY</div>
+      <h2 class="hero-title">I'M BORED <span class="highlight">AS HELL</span></h2>
+      <p class="hero-subtitle">What do you want to do right now? Pick an activity below or talk to your AI companion!</p>
+
+      <!-- 5 Main Hub Selectors -->
+      <div class="hub-grid" id="hub-grid">
+        <div class="hub-card active" data-tab="create">
+          <div class="hub-icon">🎨</div>
+          <div class="hub-info">
+            <h3>CREATE</h3>
+            <p>15m Challenges & Canvas</p>
+          </div>
+        </div>
+
+        <div class="hub-card" data-tab="learn">
+          <div class="hub-icon">🧠</div>
+          <div class="hub-info">
+            <h3>LEARN</h3>
+            <p>Rabbit Holes & Deep Facts</p>
+          </div>
+        </div>
+
+        <div class="hub-card" data-tab="play">
+          <div class="hub-icon">🎮</div>
+          <div class="hub-info">
+            <h3>PLAY</h3>
+            <p>Emoji Riddles & Mini-Games</p>
+          </div>
+        </div>
+
+        <div class="hub-card" data-tab="waste">
+          <div class="hub-icon">💀</div>
+          <div class="hub-info">
+            <h3>WASTE TIME</h3>
+            <p>Bubble Wrap, Buttons & Rocks</p>
+          </div>
+        </div>
+
+        <div class="hub-card" data-tab="productive">
+          <div class="hub-icon">🚀</div>
+          <div class="hub-info">
+            <h3>BE PRODUCTIVE</h3>
+            <p>5m Micro-Wins & Focus</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 1: 🎨 CREATE VIEW
+         ====================================================================== -->
+    <section id="view-create" class="view-section active-view glass feature-box">
+      <div class="feature-header">
+        <div class="feature-title-group">
+          <span style="font-size: 1.6rem">🎨</span>
+          <h2>YOUR RANDOM CREATIVE CHALLENGE</h2>
+        </div>
+        <span class="feature-tag" id="create-category-badge">DESIGN</span>
+      </div>
+
+      <div class="create-grid">
+        <!-- Challenge Card & Timer -->
+        <div class="challenge-card">
+          <div class="challenge-prompt-box">
+            <span class="prompt-category" id="challenge-category">LOGO DESIGN</span>
+            <p class="prompt-text" id="challenge-prompt">Design a logo for an imaginary coffee shop called "Moon Bean".</p>
+            <p class="prompt-tip" id="challenge-tip">Tip: Think about celestial coffee cups, lunar textures, or glowing neon-purple beans.</p>
+          </div>
+
+          <!-- Circular 15m Countdown Timer -->
+          <div class="timer-container">
+            <div class="timer-svg-box">
+              <svg viewBox="0 0 100 100">
+                <circle class="timer-bg-circle" cx="50" cy="50" r="45"></circle>
+                <circle class="timer-prog-circle" id="challenge-progress-ring" cx="50" cy="50" r="45"></circle>
+              </svg>
+              <div class="timer-digits" id="challenge-timer-display">15:00</div>
+            </div>
+
+            <div class="timer-controls">
+              <button class="btn btn-primary" id="btn-challenge-start">▶ START TIMER</button>
+              <button class="btn btn-secondary" id="btn-challenge-reset">↺ Reset</button>
+            </div>
+          </div>
+
+          <button class="btn btn-secondary" id="btn-new-challenge">🎲 Give Me Another Challenge</button>
+        </div>
+
+        <!-- Built-in Interactive Drawing Pad -->
+        <div class="canvas-wrapper">
+          <div class="canvas-toolbar">
+            <div class="palette">
+              <div class="color-dot active" style="background:#06b6d4" data-color="#06b6d4"></div>
+              <div class="color-dot" style="background:#a855f7" data-color="#a855f7"></div>
+              <div class="color-dot" style="background:#ec4899" data-color="#ec4899"></div>
+              <div class="color-dot" style="background:#10b981" data-color="#10b981"></div>
+              <div class="color-dot" style="background:#f59e0b" data-color="#f59e0b"></div>
+              <div class="color-dot" style="background:#ffffff" data-color="#ffffff"></div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:0.5rem">
+              <button class="btn btn-secondary" id="btn-canvas-undo" style="padding:0.4rem 0.8rem; font-size:0.8rem">↩ Undo</button>
+              <button class="btn btn-secondary" id="btn-canvas-clear" style="padding:0.4rem 0.8rem; font-size:0.8rem">🗑 Clear</button>
+              <button class="btn btn-cyan" id="btn-canvas-download" style="padding:0.4rem 0.8rem; font-size:0.8rem">💾 Save Art</button>
+            </div>
+          </div>
+
+          <!-- Drawing Canvas -->
+          <canvas id="sketch-canvas" class="canvas-element"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 2: 🧠 LEARN VIEW
+         ====================================================================== -->
+    <section id="view-learn" class="view-section glass feature-box">
+      <div class="feature-header">
+        <div class="feature-title-group">
+          <span style="font-size: 1.6rem">🧠</span>
+          <h2>LEARN SOMETHING RANDOM & MIND-BLOWING</h2>
+        </div>
+        <span class="feature-tag" id="learn-category-badge">NATURE & SCIENCE</span>
+      </div>
+
+      <div class="learn-box">
+        <span class="learn-category" id="learn-category">BIOLOGY & NATURE</span>
+        <h3 class="learn-heading" id="learn-title">Why do cats purr?</h3>
+        <p class="learn-summary" id="learn-summary">Cats purr not just when they are happy, but also to heal themselves!</p>
+        
+        <div class="learn-details" id="learn-details">
+          A cat’s purr vibrates at a frequency between 25 and 150 Hertz. In human medicine, sound frequencies in this exact range have been shown to improve bone density, repair tendons, ease breathing, and reduce pain. Cats basically have a built-in cellular regeneration engine.
+        </div>
+
+        <p class="learn-question" id="learn-question">💭 Deep thought: Could human acoustic therapy borrow feline purr frequencies?</p>
+
+        <div class="learn-actions">
+          <button class="btn btn-primary" id="btn-next-fact">🎲 GIVE ME ANOTHER</button>
+          <button class="btn btn-secondary" id="btn-read-fact">🔊 Read to Me</button>
+          <button class="btn btn-cyan" id="btn-discuss-fact">💬 Deep Dive in Chat</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 3: 🎮 PLAY VIEW
+         ====================================================================== -->
+    <section id="view-play" class="view-section glass feature-box">
+      <div class="feature-header">
+        <div class="feature-title-group">
+          <span style="font-size: 1.6rem">🎮</span>
+          <h2>ARCADE & MINI-GAMES</h2>
+        </div>
+        
+        <!-- Game Subtabs -->
+        <div class="play-subtabs">
+          <button class="subtab-btn active" data-game="emoji">🧩 Emoji Riddles</button>
+          <button class="subtab-btn" data-game="typer">⌨️ Meteor Typer</button>
+          <button class="subtab-btn" data-game="reflex">⚡ Reflex Tester</button>
+        </div>
+      </div>
+
+      <!-- Game 1: Emoji Riddle Guesser -->
+      <div id="game-emoji" class="game-panel active-game">
+        <div class="emoji-riddle-container">
+          <span class="feature-tag" id="emoji-category">Category: Movie</span>
+          <div class="emoji-display-box" id="emoji-display">🧊 🚢 💔</div>
+          
+          <div class="emoji-hint-text hidden" id="emoji-hint"></div>
+          <div class="emoji-answer-text hidden" id="emoji-answer"></div>
+
+          <div class="emoji-input-group">
+            <input type="text" id="emoji-input" class="text-input" placeholder="Guess the movie or song..." autocomplete="off">
+            <button class="btn btn-primary" id="btn-emoji-submit">Submit</button>
+          </div>
+
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap; justify-content:center;">
+            <button class="btn btn-secondary" id="btn-emoji-hint">💡 Hint</button>
+            <button class="btn btn-secondary" id="btn-emoji-reveal">👀 Reveal</button>
+            <button class="btn btn-cyan" id="btn-emoji-next">➡️ Next Riddle</button>
+          </div>
+
+          <div style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-muted)">
+            Current Streak: <strong style="color:var(--neon-yellow)" id="emoji-streak">0</strong> 🔥
+          </div>
+        </div>
+      </div>
+
+      <!-- Game 2: Meteor Typer Arcade -->
+      <div id="game-typer" class="game-panel">
+        <div class="typer-wrapper">
+          <div class="typer-stats">
+            <div>Score: <span id="typer-score" style="color:var(--neon-cyan)">0</span></div>
+            <div>Lives: <span id="typer-lives">❤️❤️❤️</span></div>
+          </div>
+          <canvas id="typer-canvas" class="typer-canvas"></canvas>
+          <div style="display:flex; gap:0.5rem; max-width:400px; width:100%">
+            <input type="text" id="typer-input" class="text-input" placeholder="Type falling words here..." autocomplete="off">
+            <button class="btn btn-primary" id="typer-start-btn">Start Game</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game 3: Cyber Reflex Tester -->
+      <div id="game-reflex" class="game-panel">
+        <div id="reflex-box" class="reflex-box">
+          <div class="reflex-text" id="reflex-text">Click to Start Reflex Test</div>
+          <div class="reflex-result" id="reflex-result"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 4: 💀 WASTE TIME VIEW
+         ====================================================================== -->
+    <section id="view-waste" class="view-section glass feature-box">
+      <div class="feature-header">
+        <div class="feature-title-group">
+          <span style="font-size: 1.6rem">💀</span>
+          <h2>SATISFYING TIME WASTERS</h2>
+        </div>
+        <span class="feature-tag">PURE PROCRASTINATION</span>
+      </div>
+
+      <div class="waste-grid">
+        <!-- 1. Infinite Bubble Wrap -->
+        <div class="waste-card">
+          <h4>🫧 Endless Bubble Wrap</h4>
+          <p style="font-size:0.85rem; color:var(--text-secondary)">Pop away your stress with crisp audio feedback!</p>
+          <div class="bubble-grid-wrapper" id="bubble-grid"></div>
+          <div style="display:flex; gap:0.5rem; align-items:center;">
+            <button class="btn btn-secondary" id="btn-bubble-reset">Reset</button>
+            <button class="btn btn-primary" id="btn-bubble-pop-all">💣 Pop All</button>
+            <span style="font-family:var(--font-mono); font-size:0.85rem; margin-left:0.5rem">Popped: <span id="bubble-count" style="color:var(--neon-cyan)">0</span></span>
+          </div>
+        </div>
+
+        <!-- 2. The Forbidden Existential Button -->
+        <div class="waste-card">
+          <h4>🚨 The Forbidden Button</h4>
+          <p style="font-size:0.85rem; color:var(--text-secondary)">DO NOT click this button. Nothing good will happen.</p>
+          <button id="existential-btn" class="existential-btn-big">DON'T CLICK</button>
+          <div class="existential-quote" id="existential-quote">"Don't do it. Please."</div>
+          <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-muted)">Times Defied: <span id="existential-clicks">0</span></span>
+        </div>
+
+        <!-- 3. Virtual Pet Rock -->
+        <div class="waste-card">
+          <h4>🪨 Virtual Pet Rock</h4>
+          <div class="pet-rock-container">
+            <div id="pet-rock-avatar" class="rock-body">
+              <div class="rock-eyes">
+                <div class="rock-eye"></div>
+                <div class="rock-eye"></div>
+              </div>
+              <div id="rock-sunglasses" class="rock-sunglasses">🕶️</div>
+            </div>
+          </div>
+          <div style="font-size:0.85rem; font-style:italic; color:var(--neon-green)" id="pet-rock-thought">
+            "Rock is enjoying doing absolutely nothing."
+          </div>
+          <div style="font-size:0.8rem; color:var(--text-muted)" id="pet-rock-mood">Mood: Solid 🪨</div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center;">
+            <button class="btn btn-secondary" id="btn-rock-pet">👋 Pet Rock</button>
+            <button class="btn btn-secondary" id="btn-rock-feed">🍕 Feed Pizza</button>
+            <button class="btn btn-cyan" id="btn-rock-glasses">🕶️ Sunglasses</button>
+          </div>
+        </div>
+
+        <!-- 4. Meme Soundboard -->
+        <div class="waste-card">
+          <h4>🔊 Instant SFX Soundboard</h4>
+          <p style="font-size:0.85rem; color:var(--text-secondary)">Synthesized sound effects on demand.</p>
+          <div class="soundboard-grid">
+            <button class="sfx-btn" onclick="soundEngine.playBoom()">💥 BOOM</button>
+            <button class="sfx-btn" onclick="soundEngine.playArcadeLaser()">🔫 LASER</button>
+            <button class="sfx-btn" onclick="soundEngine.playVictory()">🎺 FANFARE</button>
+            <button class="sfx-btn" onclick="soundEngine.playError()">❌ BUZZER</button>
+            <button class="sfx-btn" onclick="soundEngine.playBubble()">🫧 POP</button>
+            <button class="sfx-btn" onclick="soundEngine.playTone(880, 0.2, 'sawtooth')">⚡ 8-BIT</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 5: 🚀 BE PRODUCTIVE VIEW
+         ====================================================================== -->
+    <section id="view-productive" class="view-section glass feature-box">
+      <div class="feature-header">
+        <div class="feature-title-group">
+          <span style="font-size: 1.6rem">🚀</span>
+          <h2>MICRO-PRODUCTIVITY & FOCUS SPRINTS</h2>
+        </div>
+        <span class="feature-tag">QUICK DOPAMINE WINS</span>
+      </div>
+
+      <div class="productive-grid">
+        <!-- 1. Pomodoro Focus Sprint -->
+        <div class="pomodoro-card">
+          <h4>⏱️ 25-Min Hyper Focus Sprint</h4>
+          <div class="focus-digits" id="focus-timer-display">25:00</div>
+          
+          <div class="ambient-selector">
+            <span style="font-size:0.85rem; color:var(--text-muted)">Ambient:</span>
+            <select id="focus-ambient-select" class="persona-select">
+              <option value="rain">🌧️ Lo-Fi Rain</option>
+              <option value="drone">🌌 Cyberpunk Drone</option>
+              <option value="cafe">☕ Cozy Cafe</option>
+              <option value="none">🔇 None</option>
+            </select>
+          </div>
+
+          <div style="display:flex; gap:0.5rem;">
+            <button class="btn btn-primary" id="btn-focus-start">▶ Start Sprint</button>
+            <button class="btn btn-secondary" id="btn-focus-pause">⏸ Pause</button>
+            <button class="btn btn-secondary" id="btn-focus-reset">↺ Reset</button>
+          </div>
+        </div>
+
+        <!-- 2. Micro-Action Roulette -->
+        <div class="challenge-card">
+          <span class="prompt-category" style="color:var(--neon-green)">5-MINUTE QUICK WIN</span>
+          <h3 style="font-size:1.25rem" id="micro-task-title">The 5-Item Desk Wipeout</h3>
+          <p style="font-size:0.95rem; color:var(--text-secondary)" id="micro-task-desc">
+            Pick up and put away exactly 5 items currently cluttering your desk or immediate table right now.
+          </p>
+          <div style="display:flex; gap:0.75rem; margin-top:auto">
+            <button class="btn btn-cyan" id="btn-micro-complete">✅ Mark Done (+30 XP)</button>
+            <button class="btn btn-secondary" id="btn-micro-spin">🎲 Spin Another</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ======================================================================
+       AI CHAT COMPANION WIDGET ("BORED-BOT 9000")
+       ====================================================================== -->
+  <div class="chat-launcher">
+    <button id="chat-toggle-btn" class="chat-toggle-btn">
+      <span>🤖</span>
+      <span>Chat with Bored-Bot</span>
+    </button>
+  </div>
+
+  <div id="chat-widget" class="chat-widget-box">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <span>🤖</span>
+        <h4>Bored-Bot 9000</h4>
+      </div>
+      <div class="chat-header-actions">
+        <button id="chat-tts-toggle" class="chat-icon-btn" title="Toggle Voice Audio Playback">🔊</button>
+        <button id="chat-clear-btn" class="chat-icon-btn" title="Clear Chat History">🗑</button>
+        <button id="chat-minimize-btn" class="chat-icon-btn" title="Minimize Chat">✕</button>
+      </div>
+    </div>
+
+    <!-- Persona Selector -->
+    <div class="chat-persona-bar">
+      <span>Persona:</span>
+      <select id="chat-persona-select" class="persona-select">
+        <option value="sarcastic">😼 Sarcastic & Witty</option>
+        <option value="hype">🚀 Hype Beast 9000</option>
+        <option value="philosopher">🧙‍♂️ Cosmic Philosopher</option>
+        <option value="rpg">🎲 Dungeon Master RPG</option>
+        <option value="smart">🤖 Smart AI Assistant</option>
+      </select>
+    </div>
+
+    <!-- Messages Container -->
+    <div id="chat-messages" class="chat-messages-area"></div>
+
+    <!-- Quick Action Pills -->
+    <div id="chat-quick-pills" class="chat-quick-pills">
+      <span class="quick-pill" data-prompt="Roast my boredom">🔥 Roast Me</span>
+      <span class="quick-pill" data-prompt="Start text RPG adventure">🎲 Text RPG</span>
+      <span class="quick-pill" data-prompt="Play 20 questions">🧠 20 Questions</span>
+      <span class="quick-pill" data-prompt="Is a hot dog a sandwich?">🌭 Debate Topic</span>
+      <span class="quick-pill" data-prompt="Tell me a funny developer joke">💻 Tell Joke</span>
+    </div>
+
+    <!-- Input Bar -->
+    <div class="chat-input-bar">
+      <input type="text" id="chat-input" class="chat-input" placeholder="Type a message or game command..." autocomplete="off">
+      <button id="chat-voice-btn" class="chat-icon-btn" title="Voice Input (Speech to Text)">🎤</button>
+      <button id="chat-send-btn" class="chat-icon-btn active" title="Send Message">➤</button>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       SETTINGS MODAL (API KEYS & CONFIG)
+       ====================================================================== -->
+  <div id="settings-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-family:var(--font-heading)">⚙️ AI & App Settings</h3>
+        <button id="settings-close-btn" class="chat-icon-btn">✕</button>
+      </div>
+      <p style="font-size:0.85rem; color:var(--text-secondary)">
+        Bored-Bot works 100% offline out-of-the-box with built-in smart game engines! You can also connect your own LLM API key for live real-time chats.
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:0.5rem;">
+        <label style="font-size:0.8rem; font-weight:600">AI Provider</label>
+        <select id="api-provider-select" class="text-input" style="padding:0.5rem">
+          <option value="gemini">Google Gemini API (gemini-1.5-flash)</option>
+          <option value="openai">OpenAI / OpenRouter API</option>
+        </select>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:0.5rem;">
+        <label style="font-size:0.8rem; font-weight:600">Custom API Key (Optional)</label>
+        <input type="password" id="api-key-input" class="text-input" placeholder="AIzaSy... or sk-...">
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.5rem;">
+        <button id="settings-save-btn" class="btn btn-primary">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/audio.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/canvas.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/games.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
